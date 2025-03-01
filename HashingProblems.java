@@ -55,7 +55,7 @@ class HashingProblems {
                 count++;
             }
         }
-        return count == 0 ? Double.NaN : sum / count;
+        return count == 0 ? 0.0 / 0.0 : sum / count;
 
         // return 0.0 / 0.0;
     }

@@ -1,5 +1,8 @@
 /*
  * *** CEPHER ONANO / COMP 400C 002 ***
+ * Last modifired 2/28/2025
+ * Most of the code was provided bty the Professor. My addiotn to the code is the implementation of 3 methods required. 
+ * part of the code used was derived from code found on the internet related to hashing.
  *
  * This hashMap object represents an over simplification of Java's implementation of HashMap within
  * Java's Collection Framework Library. You are to complete the following methods:
@@ -242,8 +245,28 @@ class myHashMap<K, V> {
          * correct
          * return value is returned the invoking function based on the remove outcome.
          */
+        int index = getBucketIndex(key);
+        HashNode<K, V> head = bucket.get(index);
+        HashNode<K, V> prev = null;
+        V removedValue = null;
 
-        return null;
+        while (head != null && removedValue == null) {
+            if (head.key.equals(key)) {
+                if (prev != null) {
+                    prev.next = head.next;
+                } else {
+                    bucket.set(index, head.next);
+                }
+                size--;
+                removedValue = head.value;
+            } else {
+                prev = head;
+                head = head.next;
+            }
+        }
+        return removedValue;
+
+        // return null;
     }
 
     /**
@@ -417,8 +440,20 @@ class myHashMap<K, V> {
          * Make sure you return the proper value based on the outcome of this method's
          * replace (see method's prologue above).
          */
+        int index = getBucketIndex(key);
+        HashNode<K, V> head = bucket.get(index);
+        V oldValue = null;
 
-        return val;
+        while (head != null && oldValue == null) {
+            if (head.key.equals(key)) {
+                oldValue = head.value;
+                head.value = val;
+            } else {
+                head = head.next;
+            }
+        }
+        return oldValue;
+
     }
 
     /**
@@ -446,8 +481,19 @@ class myHashMap<K, V> {
          * the
          * value 'oldval', and is so, it SHOULD call replace(K, V) for code reuse.
          */
+        int index = getBucketIndex(key);
+        HashNode<K, V> head = bucket.get(index);
+        boolean isReplaced = false;
 
-        return false;
+        while (head != null && !isReplaced) {
+            if (head.key.equals(key) && head.value.equals(oldVal)) {
+                head.value = newVal;
+                isReplaced = true;
+            } else {
+                head = head.next;
+            }
+        }
+        return isReplaced;
     }
 
     /**
