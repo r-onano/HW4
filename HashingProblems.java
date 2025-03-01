@@ -46,8 +46,18 @@ class HashingProblems {
          * returning 0.0 is NOT correct, as that is not the average value. Whereas
          * returning 0.0/0.0 IS correct (which would return a non-number).
          */
+        double sum = 0;
+        int count = 0;
 
-        return 0.0 / 0.0;
+        for (int num : array) {
+            if (map.containsKey(num)) {
+                sum += map.get(num);
+                count++;
+            }
+        }
+        return count == 0 ? Double.NaN : sum / count;
+
+        // return 0.0 / 0.0;
     }
 
     /*
@@ -67,7 +77,11 @@ class HashingProblems {
          *
          * Hint: Consider iterating over the HashMap using the keySet method.
          */
-
+        for (Integer key : map.keySet()) {
+            if (key % 2 != 0) {
+                result.add(map.get(key));
+            }
+        }
         return result;
     }
 
@@ -125,8 +139,19 @@ class HashingProblems {
         /*
          * ADD YOUR CODE HERE
          */
+        Set<Integer> numSet = new HashSet<>();
+        int count = 0;
 
-        return -1;
+        for (int num : numbers) {
+            if (numSet.contains(num - k)) {
+                count++;
+            }
+            if (numSet.contains(num + k)) {
+                count++;
+            }
+            numSet.add(num);
+        }
+        return count;
     }
 
 } /* end class HashingProblems */
